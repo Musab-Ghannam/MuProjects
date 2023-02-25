@@ -1,1 +1,1 @@
-# MuProjects
+# MyProjects
