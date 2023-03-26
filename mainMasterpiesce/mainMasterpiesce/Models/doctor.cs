@@ -18,9 +18,10 @@ namespace mainMasterpiesce.Models
         public doctor()
         {
             this.appointments = new HashSet<appointment>();
+            this.feedbacks = new HashSet<feedback>();
+            this.NotAvailableTimes = new HashSet<NotAvailableTime>();
             this.transactionsdoctors = new HashSet<transactionsdoctor>();
             this.patients = new HashSet<patient>();
-            this.feedbacks = new HashSet<feedback>();
         }
     
         public int doctorId { get; set; }
@@ -46,16 +47,22 @@ namespace mainMasterpiesce.Models
         public Nullable<double> pricePerHour { get; set; }
         public Nullable<double> ratingdoctor { get; set; }
         public Nullable<int> ratingint { get; set; }
+        public string experience { get; set; }
+        public Nullable<System.DateTime> birthday { get; set; }
+        public string addresss { get; set; }
+        public string educationdetails { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointment> appointments { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual specialization specialization1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<feedback> feedbacks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NotAvailableTime> NotAvailableTimes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transactionsdoctor> transactionsdoctors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<patient> patients { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<feedback> feedbacks { get; set; }
     }
 }

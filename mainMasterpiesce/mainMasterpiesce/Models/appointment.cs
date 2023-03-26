@@ -17,17 +17,18 @@ namespace mainMasterpiesce.Models
         public int apointmentId { get; set; }
         public Nullable<int> patientId { get; set; }
         public Nullable<int> doctorId { get; set; }
-        public Nullable<System.DateTime> starttime { get; set; }
-        public Nullable<System.DateTime> endtime { get; set; }
+        public string starttime { get; set; }
+        public string endtime { get; set; }
         public string doctornotes { get; set; }
         public string patientnotes { get; set; }
         public Nullable<double> apointmentprice { get; set; }
         public Nullable<decimal> rating { get; set; }
-        public string medication { get; set; }
+        public Nullable<System.DateTime> BookingDate { get; set; }
         public string dosage { get; set; }
         public string dosagefrequency { get; set; }
         public string medicationinstructions { get; set; }
         public Nullable<int> confirmappointment { get; set; }
+        public string JoinUrl { get; set; }
     
         public virtual doctor doctor { get; set; }
         public virtual patient patient { get; set; }

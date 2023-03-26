@@ -1,0 +1,350 @@
+﻿@model IEnumerable<mainMasterpiesce.Models.doctor>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminDashBoard.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-7 col-auto">
+                    <h3 class="page-title">Specialities</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Specialities</li>
+                    </ul>
+                </div>
+                <div class="col-sm-5 col">
+
+                    @*@Html.ActionLink("Create New", "Create")*@
+                    @Html.ActionLink("Add", "Create", null, new { @class = "btn btn-primary float-right mt-2" })
+
+                    @*<a href="~/specializations/Create" data-toggle="modal" class="btn btn-primary float-right mt-2">Add</a>*@
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+
+
+                            <table class="datatable table table-hover table-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Doctor Name</th>
+                                        <th>Speciality</th>
+                                        <th>Member Since</th>
+                                        <th>Earned</th>
+                                        <th>Account Status</th>
+                                        <th>Actions</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+
+
+                                    <tr>
+                                        <td>
+                                            <h2 class="table-avatar">
+                                                <a href="profile.html" class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="@Url.Content(item.picdoctor)" alt="@item.picdoctor"></a>
+                                                <a href="profile.html">Dr. @item.doctorName</a>
+                                            </h2>
+                                        </td>
+                                        <td>@item.specialization1.namespecialization</td>
+
+                                        <td>
+                                            @{
+                                                if (item.startedate != null)
+                                                {
+                                                    @item.startedate.Value.ToString("yyyy-MM-dd")
+                                                }
+                                            }<br><small>
+  
+    </small>
+                                        </td>
+
+                                        <td>
+
+                                            @{
+
+                                                var appointmentsByPatient = item.appointments.GroupBy(c => c.doctorId).Count();
+
+                                                int totalprice = appointmentsByPatient * Convert.ToInt16(item.pricePerHour);
+
+
+                                                double amountdoc = Convert.ToDouble(totalprice) * .95;
+                                            }
+
+                                            @amountdoc
+                                   
+
+
+
+
+                                        </td>
+
+                                        <td>
+                                            @*<div class="status-toggle">
+            <input type="checkbox" id="status_1" class="check" checked>
+            <label for="status_1" class="checktoggle">checkbox</label>
+        </div>*@
+
+                                            @if (item.statedoctor == 1)
+                                            {
+
+
+                                                <span class="badge badge-pill bg-success-light">Confirm</span>
+
+
+                                            }
+                                            else
+                                            {
+
+                                                <span class="badge badge-pill bg-danger-light">Pending</span>
+                                            }
+
+                                        </td>
+                                        <td>
+
+                                            @Html.ActionLink("Details", "Details", new { id = item.doctorId }, new { @class = "btn btn-info" })
+
+
+                                            @if (item.statedoctor == 1)
+                                            {
+
+
+                                                <input type="submit" name="Block" class="btn btn-danger" value="Block"/>
+
+
+                                            }
+                                            else
+                                            {
+
+                                                <input type="submit" name="accept" class="btn btn-primary" value="Accept"/>
+                                            }
+
+
+
+                                        </td>
+
+
+
+                                    </tr>      }
+                           
+                                </tbody>
+                            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            @*<table class="datatable table table-hover table-center mb-0">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.locationdoctor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.doctorName)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.email)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.phoneNumber)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.qualiification)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.specialization)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.startedate)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.idCardfile)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.picdoctor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.certificationfile)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.birthfile)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.statedoctor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.earningDoctortotal)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AmountsDue)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.IBAN)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Gender)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.infodoctor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.pricePerHour)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ratingdoctor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.ratingint)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.experience)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.birthday)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.addresss)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.educationdetails)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.AspNetUser.Email)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.specialization1.namespecialization)
+                                    </th>
+                                    <th></th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.locationdoctor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.doctorName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.phoneNumber)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.qualiification)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.specialization)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.startedate)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.idCardfile)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.picdoctor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.certificationfile)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.birthfile)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.statedoctor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.earningDoctortotal)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AmountsDue)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.IBAN)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Gender)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.infodoctor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.pricePerHour)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ratingdoctor)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.ratingint)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.experience)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.birthday)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.addresss)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.educationdetails)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.AspNetUser.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.specialization1.namespecialization)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Edit", "Edit", new { id = item.doctorId }) |
+                                            @Html.ActionLink("Details", "Details", new { id = item.doctorId }) |
+                                            @Html.ActionLink("Delete", "Delete", new { id = item.doctorId })
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>*@
+                        </div>
+                    </div>
+</div>
+</div>
+          

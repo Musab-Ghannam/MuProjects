@@ -1,4 +1,7 @@
 ﻿using System;
+
+
+
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -9,6 +12,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using mainMasterpiesce.Models;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+
 
 namespace mainMasterpiesce.Controllers
 {
@@ -80,13 +88,29 @@ namespace mainMasterpiesce.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
+
+                    if (user != null && await UserManager.IsInRoleAsync(user.Id, "Admin"))
+                    {
+                        return RedirectToAction("Index", "appointments");
+                    }
+
                     if (user != null && await UserManager.IsInRoleAsync(user.Id, "doctor"))
                     {
                         return RedirectToAction("EnrollDoctor", "DoctorEnrolling");
                     }
-                    else if (User.IsInRole("patient"))
+                    else if (user != null && await UserManager.IsInRoleAsync(user.Id, "patient"))
                     {
-                        return RedirectToAction("Index", "MainHome");
+                        if (Session["count"] != null && Session["doctorId"]!=null)
+                        {
+                            //return RedirectToAction("checkout", "DoctorsInfo");
+
+                            return RedirectToAction("checkout", "DoctorsInfo", new { id = Session["doctorId"] });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "MainHome");
+                        }
                     }
                     return RedirectToAction("Index", "MainHome");
                 case SignInStatus.LockedOut:
@@ -156,12 +180,29 @@ namespace mainMasterpiesce.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, string lname, string male, string Isuser, string emailHelper, string phone)
+        public async Task<ActionResult> Register(RegisterViewModel model, string lname, string male, string Isuser, string emailHelper, string phone,string birthdate,string country,string city,HttpPostedFileBase pic)
         {
+
+            // Send an HTTP GET request to the API endpoint and get the response
+            // Create an HttpClient object to send the HTTP request
+            var client = new HttpClient();
+
+            // Send an HTTP GET request to the API endpoint and get the response
+            var response = await client.GetAsync(country);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            // Parse the JSON response into a JObject
+            var jsonObject = JObject.Parse(responseContent);
+
+            // Extract the name of the country from the JSON object
+            string countryName = (string)jsonObject["name"];
+      
+
+
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email,PhoneNumber= phone };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -173,7 +214,7 @@ namespace mainMasterpiesce.Controllers
 
 
 
-
+                      
 
                         var patiant = new patient
                         {
@@ -184,15 +225,29 @@ namespace mainMasterpiesce.Controllers
                             Id = user.Id,
                             startedate = DateTime.Now,
                             patientemail = model.Email,
+                            birthday = Convert.ToDateTime(birthdate),
+                      locationdetails = (string)jsonObject["name"]+','+city
+
+                
 
 
 
 
 
 
+                    };
+                        if (pic != null)
+                        {
+                            string path = Server.MapPath("~/Content/images/") + pic.FileName;
+                            pic.SaveAs(path);
+                            patiant.picpatient = pic.FileName;
 
-                        };
-                        using (var context = new FindingpeaceEntities())
+
+                        }
+
+
+
+                        using (var context = new FindingpeaceEntities1())
                         {
 
                             context.patients.Add(patiant);
@@ -207,7 +262,7 @@ namespace mainMasterpiesce.Controllers
 
 
                         };
-                        using (var context = new FindingpeaceEntities())
+                        using (var context = new FindingpeaceEntities1())
                         {
 
                             context.AspNetUserRoles.Add(Role);
@@ -215,7 +270,7 @@ namespace mainMasterpiesce.Controllers
                         }
 
 
-                        return RedirectToAction("Index", "mainHome");
+                        return RedirectToAction("Login", "Account");
 
 
 
@@ -233,11 +288,25 @@ namespace mainMasterpiesce.Controllers
 
                             Gender = male == "male" ? true : false,
                             email= model.Email,
-
+                            birthday = Convert.ToDateTime(birthdate),
+                    locationdoctor = city+',' + (string)jsonObject["name"]
 
 
                         };
-                        using (var context = new FindingpeaceEntities())
+
+                        if (pic != null)
+                        {
+                            string path = Server.MapPath("~/Content/images/") + pic.FileName;
+                            pic.SaveAs(path);
+                            doctor.picdoctor = pic.FileName;
+
+
+                        }
+
+
+
+
+                        using (var context = new FindingpeaceEntities1())
                         {
 
                             context.doctors.Add(doctor);
@@ -251,7 +320,7 @@ namespace mainMasterpiesce.Controllers
 
 
                         };
-                        using (var context = new FindingpeaceEntities())
+                        using (var context = new FindingpeaceEntities1())
                         {
 
                             context.AspNetUserRoles.Add(Role);
@@ -490,7 +559,11 @@ namespace mainMasterpiesce.Controllers
             return View(model);
         }
 
-        //
+        public ActionResult LogOfff()
+        {
+            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            return RedirectToAction("Index", "mainHome");
+        }
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]

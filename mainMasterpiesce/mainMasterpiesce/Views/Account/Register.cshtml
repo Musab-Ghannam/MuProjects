@@ -127,8 +127,10 @@
                         @*SignUpBoxes*@
                         <div class="box" style="margin-top:80px">
 
+                            @*@using (Html.BeginForm("Edit", "DoctorsInfo", FormMethod.Post, new { enctype = "multipart/form-data" }))*@
 
-                            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
                             {
                                 @Html.AntiForgeryToken()
 
@@ -201,6 +203,45 @@
 
 
                                 </div>
+                                <div class="info">
+                                    <label>Birthday</label>
+
+                                    <div class="lock">
+                                        <input type="date" class="Email-address" id="birthdate" name="birthdate" />
+
+
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="info">
+                                    <label>Country</label>
+
+                                    <div class="lock">
+                                     
+
+                                        <select id="countriesDropdown" class="Email-address" name="country"></select>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="info">
+                                    <label>City</label>
+
+                                    <div class="lock">
+                                        <input type="text" class="Email-address" id="city" name="city" placeholder="" />
+
+
+                                    </div>
+
+
+                                </div>
+
+
                                 @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
 
 
@@ -229,22 +270,22 @@
 
 
                                 @*<div class="info">
-                                        <div>
-                                            <label>Gender: </label>
+                <div>
+                    <label>Gender: </label>
 
-                                            <div class="lock">
-                                                <input type="radio" id="male" name="male" value="male">
-                                                <label for="male">Male</label>
-                                                <input type="radio" id="female" name="male" value="female">
-                                                <label for="female">Female</label>
-                                            </div>
+                    <div class="lock">
+                        <input type="radio" id="male" name="male" value="male">
+                        <label for="male">Male</label>
+                        <input type="radio" id="female" name="male" value="female">
+                        <label for="female">Female</label>
+                    </div>
 
 
-                                        </div>
+                </div>
 
-                                        <input type="file" name="pic" style="border:none" />
+                <input type="file" name="pic" style="border:none" />
 
-                                    </div>*@
+            </div>*@
 
 
                                 <div class="sub" style="margin-top:-30px">
@@ -258,11 +299,7 @@
                                 already have an acount?<a href="Login" id="whats">  Login</a>
                             </div>
                             <p id="already-registered">you already registered</p>
-                            @*<div class="agree">
-                                    <input type="checkbox">
-                                    <label>I agree to the <span id="blue">Terms and Conditions</span></label>
-
-                                </div>*@
+        
 
 
                         </div>
@@ -286,6 +323,63 @@
     </div>
 
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+
+<script>
+    // Set up the API URL for retrieving countries
+    const countriesApiUrl = 'https://api.teleport.org/api/countries/';
+    const citiesApiUrlPrefix = 'https://api.teleport.org/api/cities/';
+
+    // Get references to the dropdown list elements
+    const countriesDropdown = document.getElementById('countriesDropdown');
+    const citiesDropdown = document.getElementById('citiesDropdown');
+
+
+    fetch(countriesApiUrl)
+        .then(response => response.json())
+        .then(data => {
+            // Loop through the list of countries and add each country name to the dropdown list
+            data._links['country:items'].forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.href;
+                option.text = country.name;
+                if (country.name === "Jordan") {
+                    option.selected = true;
+                }
+                countriesDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error(error));
+
+    // Set up an event listener for when the user changes the selection in the countries dropdown list
+    countriesDropdown.addEventListener('change', event => {
+        const selectedCountryHref = event.target.value;
+
+        // Clear the cities dropdown list
+        citiesDropdown.innerHTML = '<option value="">--Select City--</option>';
+
+        if (selectedCountryHref) {
+            // Populate the cities dropdown list for the selected country
+         fetch(selectedCountryHref + 'cities/')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); // log the data to the console
+    // Loop through the list of cities and add each city name to the dropdown list
+    data._embedded['city:search-results'].forEach(city => {
+      const option = document.createElement('option');
+      option.value = city.href;
+      option.text = city.name;
+      citiesDropdown.appendChild(option);
+    });
+  })
+  .catch(error => console.error(error));
+        }
+    });
+
+
+    
+
+</script>
 
 
 

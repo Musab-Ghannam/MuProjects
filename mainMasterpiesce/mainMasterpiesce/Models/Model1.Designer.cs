@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\dell\source\repos\mainMasterpiesce\mainMasterpiesce\Models\Model1.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\dell\OneDrive\Desktop\template\18 3 2023\mainMasterpiesce\mainMasterpiesce\Models\Model1.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

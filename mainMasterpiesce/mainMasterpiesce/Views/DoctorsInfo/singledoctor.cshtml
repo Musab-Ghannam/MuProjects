@@ -132,7 +132,17 @@
                                         <p class="doc-speciality" style="width:300px">@Model.Item1[0].infodoctor</p>
                                         <p class="doc-department" style="color: #20BBBD">
                                             Joining Date:
+                                            @{
+//int JoinDate=Convert.ToDateTime(Model.Item1[0].startedate).Day;
+//int x = DateTime.Now.Day-JoinDate;
 
+
+//DateTime start = Convert.ToDateTime(Model.Item1[0].startedate);
+//if(start>DateTime.Now)
+
+
+                                                @*<span>@x</span>*@
+                                             }
                                             @*@timeperiod*@
 
                                         </p>
@@ -227,7 +237,7 @@
                                                 <i class="fas fa-map-marker-alt" onclick="window.open('@locationlink', '_blank');"></i> @regionName - <a style="color: #20BBBD" href="javascript:void(0);" onclick="window.open('@locationlink', '_blank');">Get Directions</a>
 
                                             </p>
-                                            <ul class="clinic-gallery">
+                                            @*<ul class="clinic-gallery">
                                                 <li>
                                                     <a href="~/doc/assets/img/features/feature-01.jpg" data-fancybox="gallery">
                                                         <img src="~/doc/assets/img/features/feature-01.jpg" alt="Feature">
@@ -248,7 +258,7 @@
                                                         <img src="~/doc/assets/img/features/feature-04.jpg" alt="Feature">
                                                     </a>
                                                 </li>
-                                            </ul>
+                                            </ul>*@
                                         </div>
                                         <div class="clinic-services">
                                             <span>Dental Fillings</span>
@@ -282,7 +292,7 @@
                                         </a>
                                     </div>
                                     <div class="clinic-booking">
-                                        <a class="apt-btn" href="booking" style="background-color: #20BBBD;border:none">Book Appointment</a>
+                                        <a class="apt-btn" href="booking?id= @Model.Item1[0].doctorId " style="background-color: #20BBBD;border:none">Book Appointment</a>
                                     </div>
                                 </div>
                             </div>
@@ -347,7 +357,7 @@
                                                                 </div>
                                                             </div>
                                                         </li>
-                                                        <li>
+                                                        @*<li>
                                                             <div class="experience-user">
                                                                 <div class="before-circle"></div>
                                                             </div>
@@ -361,17 +371,17 @@
                                                                     <span class="time">2003 - 2005</span>
                                                                 </div>
                                                             </div>
-                                                        </li>
+                                                        </li>*@
                                                     </ul>
                                                 </div>
                                             </div>
                                             <!-- /Education Details -->
                                             <!-- Experience Details -->
                                             <div class="widget experience-widget">
-                                                <h4 class="widget-title">Work & Experience</h4>
+                                                <h4 class="widget-title"></h4>
                                                 <div class="experience-box">
                                                     <ul class="experience-list">
-                                                        <li>
+                                                        @*<li>
                                                             <div class="experience-user">
                                                                 <div class="before-circle"></div>
                                                             </div>
@@ -384,8 +394,8 @@
                                                                     <span class="time">2010 - Present (5 years)</span>
                                                                 </div>
                                                             </div>
-                                                        </li>
-                                                        <li>
+                                                        </li>*@
+                                                        @*<li>
                                                             <div class="experience-user">
                                                                 <div class="before-circle"></div>
                                                             </div>
@@ -409,17 +419,17 @@
                                                                     <span class="time">2005 - 2007 (2 years)</span>
                                                                 </div>
                                                             </div>
-                                                        </li>
+                                                        </li>*@
                                                     </ul>
                                                 </div>
                                             </div>
                                             <!-- /Experience Details -->
                                             <!-- Awards Details -->
                                             <div class="widget awards-widget">
-                                                <h4 class="widget-title">Awards</h4>
+                                                <h4 class="widget-title"></h4>
                                                 <div class="experience-box">
                                                     <ul class="experience-list">
-                                                        <li>
+                                                        @*<li>
                                                             <div class="experience-user">
                                                                 <div class="before-circle"></div>
                                                             </div>
@@ -434,8 +444,8 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                        </li>
-                                                        <li>
+                                                        </li>*@
+                                                        @*<li>
                                                             <div class="experience-user">
                                                                 <div class="before-circle"></div>
                                                             </div>
@@ -472,13 +482,13 @@
                                                                     </p>
                                                                 </div>
                                                             </div>
-                                                        </li>
+                                                        </li>*@
                                                     </ul>
                                                 </div>
                                             </div>
                                             <!-- /Awards Details -->
                                             <!-- Services List -->
-                                            <div class="service-list">
+                                            <!--<div class="service-list">
                                                 <h4>Services</h4>
                                                 <ul class="clearfix">
                                                     <li>Tooth cleaning </li>
@@ -488,10 +498,10 @@
                                                     <li>Fissure Sealants</li>
                                                     <li>Surgical Extractions</li>
                                                 </ul>
-                                            </div>
+                                            </div>-->
                                             <!-- /Services List -->
                                             <!-- Specializations List -->
-                                            <div class="service-list">
+                                            <!--<div class="service-list">
                                                 <h4>Specializations</h4>
                                                 <ul class="clearfix">
                                                     <li>Children Care</li>
@@ -501,7 +511,7 @@
                                                     <li>Periodontist</li>
                                                     <li>Prosthodontics</li>
                                                 </ul>
-                                            </div>
+                                            </div>-->
                                             <!-- /Specializations List -->
 
                                         </div>
@@ -743,7 +753,7 @@
 
 
 
-                                                                    <span class="comment-date">@Html.Raw(GetTimeSinceFeedbackString(timeSinceFeedback))</span>
+                                                                    @*<span class="comment-date">@Html.Raw(GetTimeSinceFeedbackString(timeSinceFeedback))</span>*@
 
                                                                 }
 

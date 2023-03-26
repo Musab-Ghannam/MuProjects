@@ -18,9 +18,9 @@ namespace mainMasterpiesce.Models
         public patient()
         {
             this.appointments = new HashSet<appointment>();
+            this.feedbacks = new HashSet<feedback>();
             this.transactionspatients = new HashSet<transactionspatient>();
             this.doctors = new HashSet<doctor>();
-            this.feedbacks = new HashSet<feedback>();
         }
     
         public int PatiantId { get; set; }
@@ -33,15 +33,17 @@ namespace mainMasterpiesce.Models
         public Nullable<double> wallet { get; set; }
         public Nullable<bool> Gender { get; set; }
         public string Email { get; set; }
+        public Nullable<System.DateTime> birthday { get; set; }
+        public string locationdetails { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointment> appointments { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<feedback> feedbacks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transactionspatient> transactionspatients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<doctor> doctors { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<feedback> feedbacks { get; set; }
     }
 }

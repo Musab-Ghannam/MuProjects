@@ -10,7 +10,7 @@ namespace mainMasterpiesce.Controllers
 {
     public class mainHomeController : Controller
     {
-        FindingpeaceEntities doct = new FindingpeaceEntities();
+        FindingpeaceEntities1 doct = new FindingpeaceEntities1();
         // GET: mainHome
         public ActionResult Index()
         { bool flag = true;
@@ -23,6 +23,29 @@ namespace mainMasterpiesce.Controllers
         
         var doctors=doct.doctors.ToList();
             var specializations=doct.specializations.ToList();
+            
+            var PatiantId = doct.patients.FirstOrDefault(c => c.Id == existuser);
+
+            var doctorId = doct.doctors.FirstOrDefault(c => c.Id == existuser);
+
+          
+
+
+
+
+
+
+
+           if(User.IsInRole("patient") && PatiantId != null)
+            {
+
+
+                Session["User"] = PatiantId.PatiantId;
+            }
+            else if(User.IsInRole("doctor") && doctorId != null)
+            {
+                Session["User"] = doctorId.doctorId;
+            }
 
             return View(Tuple.Create(doctors, specializations));
         }

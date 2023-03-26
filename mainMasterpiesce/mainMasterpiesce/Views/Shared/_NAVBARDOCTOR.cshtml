@@ -1,4 +1,4 @@
-﻿
+﻿@*@model Tuple<List<mainMasterpiesce.Models.patient>, List<mainMasterpiesce.Models.appointment>>*@
 @{
     Layout = null;
 }
@@ -31,7 +31,13 @@
 </head>
 <body>
     @*nav*@
+    @{
+        string[] nameParts = User.Identity.Name.Split('@');
+        string firstName = nameParts[0];
 
+
+
+    }
     <div>
 
         <!--Main Header-->
@@ -39,10 +45,8 @@
 
             <nav class="nav1" id="navbar">
 
-                @*<img src="~/Content/images/logo.png" width="0" alt="logo" style="padding:0px !important;margin-left:50px !important" />*@
-                <div class="empty" style="height:50px">
-                    <img src="~/Content/images/logo.png" style="height: 50px; padding: 0; margin: 0;" />
-                </div>
+                <a href="/" class=""><img src="~/Content/images/logo.png" width="80" alt="logo" style="padding:0px !important;margin-left:50px !important" /></a>
+
                 <div class="hamburger">
                     <span class="line"></span>
                     <span class="line"></span>
@@ -54,10 +58,30 @@
                     <a href="https://localhost:44388/mainHome/Aboutt">about</a>
                     <a href="https://localhost:44388/mainHome/ConTact">contact</a>
                     <a href="https://localhost:44388/Doctors/singledoctor">therapist list</a>
+
                     <a href="#">psycologist list</a>
-                    <a href="#">log out</a>
-                    <a href="#"><i class="fa-solid fa-user"></i></a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                        @Html.ActionLink("Hello " + firstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    }
+                    else
+                    {
+
+                        @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                    }
+
+                    @*<a href="https://localhost:44388/myAccount/signin">log out</a>
+                        <a href="#"><i class="fa-solid fa-user"></i></a>*@
+
                 </div>
+                <div>
+
+                </div>
+                @Html.Partial("_LoginPartial")
             </nav>
         </header>
         <!--End Main Header -->

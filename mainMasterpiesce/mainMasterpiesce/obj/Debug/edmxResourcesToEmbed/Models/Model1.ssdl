@@ -17,17 +17,18 @@
     <Property Name="apointmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="patientId" Type="int" />
     <Property Name="doctorId" Type="int" />
-    <Property Name="starttime" Type="datetime" />
-    <Property Name="endtime" Type="datetime" />
+    <Property Name="starttime" Type="varchar(max)" />
+    <Property Name="endtime" Type="varchar(max)" />
     <Property Name="doctornotes" Type="text" />
     <Property Name="patientnotes" Type="text" />
     <Property Name="apointmentprice" Type="float" />
     <Property Name="rating" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="medication" Type="varchar" MaxLength="255" />
+    <Property Name="BookingDate" Type="date" />
     <Property Name="dosage" Type="varchar" MaxLength="255" />
     <Property Name="dosagefrequency" Type="varchar" MaxLength="255" />
     <Property Name="medicationinstructions" Type="text" />
     <Property Name="confirmappointment" Type="int" />
+    <Property Name="JoinUrl" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
@@ -108,6 +109,10 @@
     <Property Name="pricePerHour" Type="float" />
     <Property Name="ratingdoctor" Type="float" />
     <Property Name="ratingint" Type="int" />
+    <Property Name="experience" Type="varchar(max)" />
+    <Property Name="birthday" Type="date" />
+    <Property Name="addresss" Type="varchar(max)" />
+    <Property Name="educationdetails" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="feedback">
     <Key>
@@ -121,6 +126,14 @@
     <Property Name="title" Type="text" />
     <Property Name="statefeedback" Type="int" />
     <Property Name="feedbacktime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="NotAvailableTime">
+    <Key>
+      <PropertyRef Name="notavailableId" />
+    </Key>
+    <Property Name="notavailableId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="doctorId" Type="int" />
+    <Property Name="timenotavailble" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="patient_favorite_doctors">
     <Key>
@@ -144,6 +157,8 @@
     <Property Name="wallet" Type="float" />
     <Property Name="Gender" Type="bit" />
     <Property Name="Email" Type="varchar(max)" />
+    <Property Name="birthday" Type="date" />
+    <Property Name="locationdetails" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="specializations">
     <Key>
@@ -262,6 +277,18 @@
       </Principal>
       <Dependent Role="feedback">
         <PropertyRef Name="patientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NotAvaila__docto__6166761E">
+    <End Role="doctors" Type="Self.doctors" Multiplicity="0..1" />
+    <End Role="NotAvailableTime" Type="Self.NotAvailableTime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="doctors">
+        <PropertyRef Name="doctorId" />
+      </Principal>
+      <Dependent Role="NotAvailableTime">
+        <PropertyRef Name="doctorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -391,6 +418,7 @@
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="doctors" EntityType="Self.doctors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="feedback" EntityType="Self.feedback" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NotAvailableTime" EntityType="Self.NotAvailableTime" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="patient_favorite_doctors" EntityType="Self.patient_favorite_doctors" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="patients" EntityType="Self.patients" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="specializations" EntityType="Self.specializations" Schema="dbo" store:Type="Tables" />
@@ -420,6 +448,10 @@
     <AssociationSet Name="FK__feedback__patien__3493CFA7" Association="Self.FK__feedback__patien__3493CFA7">
       <End Role="patients" EntitySet="patients" />
       <End Role="feedback" EntitySet="feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NotAvaila__docto__6166761E" Association="Self.FK__NotAvaila__docto__6166761E">
+      <End Role="doctors" EntitySet="doctors" />
+      <End Role="NotAvailableTime" EntitySet="NotAvailableTime" />
     </AssociationSet>
     <AssociationSet Name="FK__patient_f__docto__07C12930" Association="Self.FK__patient_f__docto__07C12930">
       <End Role="doctors" EntitySet="doctors" />

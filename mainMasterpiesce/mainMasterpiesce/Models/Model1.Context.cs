@@ -13,10 +13,10 @@ namespace mainMasterpiesce.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FindingpeaceEntities : DbContext
+    public partial class FindingpeaceEntities1 : DbContext
     {
-        public FindingpeaceEntities()
-            : base("name=FindingpeaceEntities")
+        public FindingpeaceEntities1()
+            : base("name=FindingpeaceEntities1")
         {
         }
     
@@ -33,11 +33,12 @@ namespace mainMasterpiesce.Models
         public virtual DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<doctor> doctors { get; set; }
+        public virtual DbSet<feedback> feedbacks { get; set; }
+        public virtual DbSet<NotAvailableTime> NotAvailableTimes { get; set; }
         public virtual DbSet<patient> patients { get; set; }
         public virtual DbSet<specialization> specializations { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<transactionsdoctor> transactionsdoctors { get; set; }
         public virtual DbSet<transactionspatient> transactionspatients { get; set; }
-        public virtual DbSet<feedback> feedbacks { get; set; }
     }
 }

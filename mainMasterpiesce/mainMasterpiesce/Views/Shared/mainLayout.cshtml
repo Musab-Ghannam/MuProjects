@@ -73,10 +73,10 @@
                 </div>
 
                 <div class="nav__link hide">
-                    <a href="https://localhost:44388/mainHome/Index">home</a>
-                    <a href="https://localhost:44388/mainHome/Aboutt">about</a>
-                    <a href="https://localhost:44388/mainHome/ConTact">contact</a>
-                    <a href="https://localhost:44388/Doctors/singledoctor">therapist list</a>
+                    <a href="Index">home</a>
+                    <a href="About">about</a>
+                    <a href="ConTact">contact</a>
+                    <a href="~/DoctorsInfo/alldoctors">therapist list</a>
 
                     <a href="#">psycologist list</a>
                     @if (User.Identity.IsAuthenticated)
@@ -85,6 +85,13 @@
 
                         <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
                         @Html.ActionLink("Hello " + firstName + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
+                        //if (Session["User"] != null)
+                        //{ }
+
+
+
+
                     }
                     else
                     {
@@ -92,11 +99,25 @@
                         @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
                         @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
                     }
+                    @if (User.IsInRole("patient"))
+                    {
+                        <a href="~/DoctorsInfo/patientProfile" style="color:black"><i class="fa-solid fa-user"></i></a>
 
-                    @*<a href="https://localhost:44388/myAccount/signin">log out</a>
-                        <a href="#"><i class="fa-solid fa-user"></i></a>*@
+                    }
+                    else if (User.IsInRole("doctor"))
+                    {
 
-                </div>
+
+                <a href="~/DoctorEnrolling/DoctorDashboard" style="color:black">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </a>
+                            }
+
+
+                            @*<a href="https://localhost:44388/myAccount/signin">log out</a>
+                <a href="#"><i class="fa-solid fa-user"></i></a>*@
+
+                    </div>
                 <div>
 
                 </div>
